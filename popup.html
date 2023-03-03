@@ -7,20 +7,21 @@
         <title>Select Equipments</title>
     </head>
     <body>
-            <form action="#">
-                <p>Select Mode of Operation:</p>
-                <select name="mode" id="mode">
+        <form id="mode" action="#">
+            <div>
+                <h3>Select Mode of Operation</h3>
+                <select name="selection" id="selection">
                     <option value="Confirmed">Confirm</option>
                     <option value="Temporary">Temporary</option>
                     <option value="Cancelled">Cancel</option>
                 </select>
-                <button type="button">Ok</button>
-            </form>
+            </div>
 
-            <ul id="equipments">
-                
-            </ul>
-       
+            <input type="search" placeholder="Search" />
+            <ul id="equipments"><!-- List of Equipments go here --> </ul>
+            <button type="button" id="ok">Ok</button>
+        </form>
+
         <script src="popup.js"></script>
     </body>
 </html>

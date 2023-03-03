@@ -1,18 +1,19 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    const { resId1, resId2, status, userMode, userEquipments } = message;
+    const { status } = message;
 
     if (status === 200) {
-        chrome.tabs.create({url: "./popup.html"})
-        for (let i = resId1; i <= resId2; i++) {
-            createNewTab(i, userMode, userEquipments);
+        chrome.tabs.create({ url: 'popup.html' });
+    } else if (status === 300) {
+        for (let i = message.resId1; i <= message.resId2; i++) {
+            // automate(i, userMode, userEquipments); user mode and equipments not yet initialized
         }
     }
 });
 
-function createNewTab(index, mode, equipments) {
+function automate(id, mode, equipments) {
     chrome.tabs.create(
         {
-            url: `https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${index}`,
+            url: `https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
         },
         (newTab) => {
             chrome.scripting.executeScript({
