@@ -11,10 +11,13 @@
     "icons": { "16": "logo.png", "48": "logo.png", "128": "logo.png" },
     "content_scripts": [
         {
-            "matches": ["https://uislive.uno-r.edu.ph/IMC/Reservation/*"],
-            "js": ["script.js"]
+            "matches": ["https://uislive.uno-r.edu.ph/IMC/Reservation"],
+            "js": ["content.js"]
         }
     ],
-    "permissions": ["scripting", "tabs"],
-    "host_permissions": ["https://uislive.uno-r.edu.ph/IMC/Reservation/*"]
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["scripting", "tabs","activeTab"],
+    "host_permissions": ["https://uislive.uno-r.edu.ph/IMC/Reservation*"]
 }
