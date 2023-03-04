@@ -1,25 +1,49 @@
+let resId1;
+let resId2;
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { status } = message;
 
     if (status === 200) {
-        chrome.tabs.create({ url: 'popup.html' });
+        resId1 = message.resId1;
+        resId2 = message.resId2;
+
+        // New Tab for users to select mode and equipments
+        chrome.tabs.create({ url: 'equipments.html' });
     } else if (status === 300) {
-        for (let i = message.resId1; i <= message.resId2; i++) {
-            // automate(i, userMode, userEquipments); user mode and equipments not yet initialized
-        }
+        loopForAutomate(message);
     }
 });
 
-function automate(id, mode, equipments) {
-    chrome.tabs.create(
-        {
-            url: `https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
-        },
-        (newTab) => {
-            chrome.scripting.executeScript({
-                target: { tabId: newTab.id },
-                files: ['automation.js'],
-            });
-        }
-    );
+async function loopForAutomate(message) {
+    for (let i = resId1; i <= resId2; i++) {
+        await automate(i, message);
+    }
 }
+
+async function automate(id, message) {
+    return new Promise((resolve) => {
+        chrome.tabs.create(
+            {
+                url: `https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
+            },
+            (newTab) => {
+                chrome.scripting.executeScript(
+                    {
+                        target: { tabId: newTab.id },
+                        files: ['automation.js'],
+                    },
+                    async () => {
+                        let response = await chrome.tabs.sendMessage(
+                            newTab.id,
+                            message
+                        );
+                        resolve(response);
+                    }
+                );
+            }
+        );
+    });
+}
+
+

@@ -29,20 +29,37 @@ const allEquipments = [
 ];
 
 let userMode;
-let userEquipments = [];
+const userEquipments = [];
 
-document.querySelector('#ok').addEventListener('click', (e) => {
+
+// Getting values of equipments selected by the user as well as mode of operation
+let okButton = document.querySelector('#ok');
+okButton.addEventListener('click', (e) => {
     userMode = document.querySelector('#selection').value;
+    if (userMode !== 'Cancelled') {
+        for (const id of allEquipments) {
+            let counterId = document.getElementById(id);
+            let counterValue = parseInt(counterId.textContent);
+
+            for (let i = 0; i < counterValue; i++) {
+                userEquipments.push(id);
+            }
+        }
+    }
+
+    // Send values as message to the background script
+    sendValues();
 });
 
+// Creating list items with counters for all equipments
 for (const item of allEquipments) {
     let count = 0;
 
     let decrement = document.createElement('button');
     decrement.append('-');
     decrement.addEventListener('click', (e) => {
-        e.preventDefault()
-        count-- ? count > 0 : count = 0;
+        e.preventDefault();
+        count-- ? count > 0 : (count = 0);
         counter.textContent = count;
     });
 
@@ -56,7 +73,7 @@ for (const item of allEquipments) {
 
     let counter = document.createElement('span');
     counter.append(count);
-    counter.setAttribute('id', `${item}-counter`);
+    counter.setAttribute('id', item);
 
     let span = document.createElement('span');
     span.appendChild(decrement);
@@ -69,4 +86,12 @@ for (const item of allEquipments) {
 
     let ul = document.querySelector('#equipments');
     ul.appendChild(li);
+}
+
+async function sendValues() {
+    chrome.runtime.sendMessage({
+        status: 300,
+        mode: userMode,
+        equipments: userEquipments,
+    });
 }
