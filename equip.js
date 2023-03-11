@@ -31,10 +31,9 @@ const allEquipments = [
 let userMode;
 const userEquipments = [];
 
-
 // Getting values of equipments selected by the user as well as mode of operation
-let okButton = document.querySelector('#ok');
-okButton.addEventListener('click', (e) => {
+let confirm = document.querySelector('#confirm');
+confirm.addEventListener('click', (e) => {
     userMode = document.querySelector('#selection').value;
     if (userMode !== 'Cancelled') {
         for (const id of allEquipments) {
@@ -52,7 +51,9 @@ okButton.addEventListener('click', (e) => {
 });
 
 // Creating list items with counters for all equipments
-for (const item of allEquipments) {
+for (let i = 0; i < allEquipments.length; i++) {
+    let item = allEquipments[i];
+
     let count = 0;
 
     let decrement = document.createElement('button');
@@ -63,17 +64,23 @@ for (const item of allEquipments) {
         counter.textContent = count;
     });
 
+    decrement.setAttribute('id', 'decrement');
+
     let increment = document.createElement('button');
     increment.append('+');
     increment.addEventListener('click', (e) => {
         e.preventDefault();
         count++;
         counter.textContent = count;
+        ``;
     });
+
+    increment.setAttribute('id', 'increment');
 
     let counter = document.createElement('span');
     counter.append(count);
     counter.setAttribute('id', item);
+    counter.setAttribute('class', 'counter');
 
     let span = document.createElement('span');
     span.appendChild(decrement);
@@ -83,6 +90,13 @@ for (const item of allEquipments) {
     let li = document.createElement('li');
     li.append(item.toUpperCase());
     li.appendChild(span);
+
+    if (i < 14) {
+        li.setAttribute('class', 'column1');
+    } else {
+        li.setAttribute('class', 'column2');
+        li.style.gridRow = i - 13;
+    }
 
     let ul = document.querySelector('#equipments');
     ul.appendChild(li);

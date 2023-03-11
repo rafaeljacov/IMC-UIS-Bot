@@ -4,22 +4,34 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Select Equipments</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="equip.css" />
+        <title>IMC Reservation Automation</title>
     </head>
     <body>
+        <header>
+            <img src="logo.png" alt="IMC logo" />
+            <h1>IMC Reservation Automation</h1>
+        </header>
         <form id="mode" action="#">
-            <div>
-                <h3>Select Mode of Operation</h3>
+            <div id="select">
+                <h3>Select Reservation Status:</h3>
                 <select name="selection" id="selection">
                     <option class="show" value="Confirmed">Confirm</option>
                     <option class="show" value="Temporary">Temporary</option>
                     <option id="hide" value="Cancelled">Cancel</option>
                 </select>
             </div>
-
-            <input type="search" placeholder="Search" />
-            <ul id="equipments"><!-- List of Equipments go here --> </ul>
-            <button type="button" id="ok">Ok</button>
+            <h3 id="equip-h3">Select Equipments</h3>
+            <ul id="equipments">
+                <!-- List of Equipments go in here -->
+            </ul>
+            <button type="button" id="confirm">Confirm</button>
         </form>
 
         <script src="equip.js"></script>

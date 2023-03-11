@@ -12,7 +12,9 @@ function handleButton() {
         chrome.runtime.sendMessage(message);
     }
 
-    if (resId1 && resId2) {
+    if (resId1 > resId2) {
+        alert('ID 1 must be smaller than ID 2!');
+    } else if (resId1 && resId2) {
         startAutomate();
     } else {
         alert('Invalid Reservation Id Entry!\n\nOperation Aborted!');
