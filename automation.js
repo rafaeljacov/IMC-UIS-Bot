@@ -22,32 +22,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-// CONVERT THIS FUNCTION TO A SCRIPT INJECTION!!!
-function addEquipments(equipments) {
-    console.log('TO DO');
-}
+
 
 async function modeTemporary(sendResponse, equipments) {
     if (equipments.length !== 0 && selectMode.value !== 'Temporary') {
         selectMode.value = 'Temporary';
-        chrome.runtime.sendMessage({ status: 'save', addEquip: true });
-        addEquipments(equipments);
+        chrome.runtime.sendMessage({ status: 'save', addEquip: true, equipments });
         saveButton.click();
     } else if (equipments.length === 0 && selectMode.value !== 'Temporary') {
         selectMode.value = 'Temporary';
         chrome.runtime.sendMessage({ status: 'save', addEquip: false });
         saveButton.click();
     } else if (equipments.length !== 0 && selectMode.value === 'Temporary') {
-        chrome.runtime.sendMessage({ status: 'save', addEquip: true });
-        addEquipments(equipments);
+        chrome.runtime.sendMessage({ status: 'save', addEquip: true, equipments });
         saveButton.click();
     }
 }
 
 async function modeConfirmed(sendResponse, equipments) {
     if (equipments.length !== 0) {
-        addEquipments(equipments);
-        chrome.runtime.sendMessage({ status: 'save', addEquip: true });
+        chrome.runtime.sendMessage({ status: 'save', addEquip: true, equipments });
         saveButton.click();
     } else {
         selectMode.value = 'Confirmed';

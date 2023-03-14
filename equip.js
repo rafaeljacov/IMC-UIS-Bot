@@ -103,9 +103,12 @@ for (let i = 0; i < allEquipments.length; i++) {
 }
 
 async function sendValues() {
-    chrome.runtime.sendMessage({
+    let response = await chrome.runtime.sendMessage({
         status: 300,
         mode: userMode,
         equipments: userEquipments,
     });
+    if (response.status === 'done') {
+        window.close();
+    }
 }

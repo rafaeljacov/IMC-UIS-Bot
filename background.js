@@ -12,6 +12,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     } else if (status === 300) {
         // 300: Step 2 OK
         loopForAutomate(message);
+        sendResponse({status: 'done'});
     } else if (status === 'save') {
         chrome.tabs.create(
             { url: 'https://uislive.uno-r.edu.ph/IMC/Reservation/' },
@@ -23,6 +24,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 });
             }
         );
+        //check if user wants to add equipments
+        if (message.addEquip) {
+            async function addEquipments(equipments) {
+                let queryOptions = { active: true, lastFocusedWindow: true };
+                let [tab] = await chrome.tabs.query(queryOptions);
+                // Execute script for adding equipments
+                chrome.scripting.executeScript(
+                    {
+                        target: {tabId: tab.id},
+                        files: ['add-equipments.js']
+                    },
+                    () => {
+                        chrome.tabs.sendMessage(tab.id, {equipments})
+                    }
+                );
+            }
+            setTimeout(() => {
+                addEquipments(message.equipments);
+            }, 1200);
+            
+        }
     }
 });
 
