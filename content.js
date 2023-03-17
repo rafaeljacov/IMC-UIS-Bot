@@ -1,12 +1,29 @@
 function handleButton() {
     const resId1 = parseInt(prompt('Enter the starting RES ID'));
     const resId2 = parseInt(prompt('Enter the final RES ID'));
+    const mode = prompt('Select mode: ( confirm, temporary, cancel )');
 
-    async function startAutomate() {
+    switch (mode.toLowerCase()) {
+        case 'confirm':
+            startAutomate(mode);
+            break;
+        case 'temporary':
+            startAutomate(mode);
+            break;
+        case 'cancel':
+            startAutomate(mode);
+            break;
+        default:
+            alert('Warning: Invalid Mode Entered!');
+            break;
+    }
+
+    async function startAutomate(mode) {
         const message = {
             status: 200,
             resId1,
             resId2,
+            mode,
         };
 
         chrome.runtime.sendMessage(message);
