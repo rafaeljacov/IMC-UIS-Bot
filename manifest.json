@@ -1,5 +1,5 @@
 {
-    "name": "IMC UIS booking automation",
+    "name": "UNO-R IMC-UIS Automation",
     "version": "1.1.0",
     "description": "This extension was purposely made to automate large booking in the UIS website for IMC",
     "manifest_version": 3,
