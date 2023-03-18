@@ -7,6 +7,7 @@ const allEquipments = [
     'dvd writer',
     'ec',
     'fsp',
+    'hdmi',
     'laptop',
     'laser pointer',
     'lcd',
@@ -28,21 +29,17 @@ const allEquipments = [
     'vhs',
 ];
 
-let userMode;
 const userEquipments = [];
 
 // Getting values of equipments selected by the user as well as mode of operation
 let confirm = document.querySelector('#confirm');
 confirm.addEventListener('click', (e) => {
-    userMode = document.querySelector('#selection').value;
-    if (userMode !== 'Cancelled') {
-        for (const id of allEquipments) {
-            let counterId = document.getElementById(id);
-            let counterValue = parseInt(counterId.textContent);
+    for (const id of allEquipments) {
+        let counterId = document.getElementById(id);
+        let counterValue = parseInt(counterId.textContent);
 
-            for (let i = 0; i < counterValue; i++) {
-                userEquipments.push(id);
-            }
+        for (let i = 0; i < counterValue; i++) {
+            userEquipments.push(id);
         }
     }
 
@@ -72,7 +69,6 @@ for (let i = 0; i < allEquipments.length; i++) {
         e.preventDefault();
         count++;
         counter.textContent = count;
-        ``;
     });
 
     increment.setAttribute('id', 'increment');
@@ -103,12 +99,16 @@ for (let i = 0; i < allEquipments.length; i++) {
 }
 
 async function sendValues() {
-    let response = await chrome.runtime.sendMessage({
-        status: 300,
-        mode: userMode,
-        equipments: userEquipments,
-    });
-    if (response.status === 'done') {
+    if (userEquipments.length === 0) {
+        alert('NO EQUIPMENTS ADDED, This window will now close...');
         window.close();
+    } else {
+        let response = await chrome.runtime.sendMessage({
+            status: 'add',
+            equipments: userEquipments,
+        });
+        if (response === 'done') {
+            window.close();
+        }
     }
 }

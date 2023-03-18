@@ -1,14 +1,11 @@
 let resId1, resId2;
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { status } = message;
-
     if (status === 200) {
-        // 200: Step 1: OK.
+        // Change Status ( confirm, temporary, cancel )
         resId1 = message.resId1;
         resId2 = message.resId2;
-        loopForAutomate(message);
-    } else if (status === 300) {
-        // 300: Step 2 OK
+        loopForMode(message);
     } else if (status === 'save') {
         chrome.tabs.create(
             { url: 'https://uislive.uno-r.edu.ph/IMC/Reservation/' },
@@ -20,30 +17,67 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 });
             }
         );
+    } else if (status === 300) {
+        chrome.tabs.create({ url: 'equipments.html' });
+        resId1 = message.resId1;
+        resId2 = message.resId2;
+    } else if (status === 'add') {
+        sendResponse('done');
+        loopForEquip(message);
     }
 });
 
-async function loopForAutomate(message) {
+async function loopForMode(message) {
     for (let i = resId1; i <= resId2; i++) {
-        await automate(i, message);
+        await automateMode(i, message);
     }
 }
 
-function automate(id, message) {
+async function loopForEquip(message) {
+    for (let i = resId1; i <= resId2; i++) {
+        await automateEquip(i, message);
+    }
+}
+
+function automateMode(id, message) {
     return new Promise((resolve) => {
         chrome.tabs.create(
             {
                 url: `https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
             },
-            async (newTab) => {
-                await chrome.scripting.executeScript({
-                    target: { tabId: newTab.id },
-                    files: ['automation.js'],
-                });
-                let response = await chrome.tabs.sendMessage(
-                    newTab.id,
-                    message
+            (newTab) => {
+                chrome.scripting.executeScript(
+                    {
+                        target: { tabId: newTab.id },
+                        files: ['automation.js'],
+                    },
+                    async () => {
+                        let response = await chrome.tabs.sendMessage(
+                            newTab.id,
+                            message
+                        );
+                        resolve(response);
+                    }
                 );
+            }
+        );
+    });
+}
+
+function automateEquip(id, message) {
+    return new Promise((resolve) => {
+        chrome.tabs.create(
+            {
+                url: `https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
+            },
+            async (tab) => {
+                await chrome.scripting.executeScript({
+                    target: { tabId: tab.id },
+                    files: ['add-equipments.js'],
+                });
+                let response = await chrome.tabs.sendMessage(tab.id, {
+                    equipments: message.equipments,
+                });
                 resolve(response);
             }
         );

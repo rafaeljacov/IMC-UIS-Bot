@@ -3,29 +3,20 @@ let saveButton = document.querySelector('#btnSaveEdit');
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { mode } = message;
-    if (
-        (mode === 'Confirmed' && selectMode.value == mode) ||
-        selectMode.value === 'Cancelled'
-    ) {
+    if (selectMode.value == mode || selectMode.value === 'Cancelled') {
         // Skip Operation
         sendResponse({ status: 400 }); // 400: Operation Aborted due to unecessary steps.
-        window.close();
-    } else if (mode === 'Confirmed') {
+    } else if (mode === 'confirm') {
         selectMode.value = 'Confirmed';
         chrome.runtime.sendMessage({ status: 'save' });
-
-        sendRes({ action: 'done' });
         saveButton.click();
-    } else if (mode === 'Temporary') {
-        selectMode.value = 'temporary';
-        chrome.runtime.sendmessage({ status: 'save' });
-
-        sendRes({ action: 'done' });
+    } else if (mode === 'temporary') {
+        selectMode.value = 'Temporary';
+        chrome.runtime.sendMessage({ status: 'save' });
         saveButton.click();
-    } else if (mode === 'Cancelled') {
+    } else if (mode === 'cancel') {
         selectMode.value = 'Cancelled';
         chrome.runtime.sendMessage({ status: 'save' });
-        sendRes({ action: 'done' });
         saveButton.click();
     }
 });

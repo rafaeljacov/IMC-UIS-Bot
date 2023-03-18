@@ -1,0 +1,23 @@
+#equip {
+    background-color: #ffc657;
+    border: 2px solid rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
+    padding: 0.5em 1em;
+    margin: 5px;
+    font-weight: 400;
+    font-size: 1.2em;
+    color: rgba(0, 0, 0, 0.75);
+    position: relative;
+    z-index: 2;
+}
+
+#status {
+    background-color: #438eb9;
+    border: 2px solid rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
+    padding: 0.5em 1em;
+    margin: 5px;
+    font-weight: 400;
+    font-size: 1.2em;    
+    color: white;
+}
