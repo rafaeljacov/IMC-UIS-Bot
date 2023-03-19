@@ -8,7 +8,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     let itemSelect = document.querySelector('#EquipmentID');
     let saveButton = document.querySelector('#btnSave');
-    let statusSelect = document.querySelector('#ResStatus');
 
     for (const item of equipments) {
         for (const option of itemSelect.options) {
