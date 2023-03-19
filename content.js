@@ -56,6 +56,10 @@ function handleEquip() {
     }
 }
 
+function handleClose() {
+    chrome.runtime.sendMessage({ status: 'close' });
+}
+
 const body = document.querySelector('body');
 
 const startButton = document.createElement('button');
@@ -66,8 +70,15 @@ const equipButton = document.createElement('button');
 equipButton.setAttribute('id', 'equip');
 equipButton.append('Add Equipments');
 
+const closeButton = document.createElement('button');
+closeButton.setAttribute('id', 'close');
+closeButton.append('Close Tabs');
+
 body.appendChild(startButton);
 startButton.addEventListener('click', handleStart);
 
 body.appendChild(equipButton);
 equipButton.addEventListener('click', handleEquip);
+
+body.appendChild(closeButton);
+closeButton.addEventListener('click', handleClose);

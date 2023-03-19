@@ -24,6 +24,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     } else if (status === 'add') {
         sendResponse('done');
         loopForEquip(message);
+    } else if (status === 'close') {
+        async function closeTabs() {
+            let tabs = chrome.tabs.query({
+                url: 'https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}',
+                currentWindow: true,
+            });
+            for (let tab of tabs) {
+                chrome.tabs.remove(tab.id);
+            }
+        }
+        closeTabs();
     }
 });
 
