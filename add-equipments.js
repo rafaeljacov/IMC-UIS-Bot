@@ -3,7 +3,7 @@ let addButton = document.querySelector(
 );
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    const { equipments } = message;
+    const { equipments, autoConfirm } = message;
     addButton.click();
 
     let itemSelect = document.querySelector('#EquipmentID');
@@ -17,5 +17,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 break;
             }
         }
+    }
+    if (autoConfirm.checked) {
+        let statusSelect = document.querySelector('#ResStatus');
+        let confirmButton = document.querySelector('#btnSaveEdit');
+
+        statusSelect.value = 'Confirmed';
+
+        chrome.runtime.sendMessage({ status: 'save' });
+        confirmButton.click();
     }
 });

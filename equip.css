@@ -40,6 +40,24 @@ form {
     padding: 2rem 3.7rem;
 }
 
+#auto-confirm-block {
+    margin: 3em auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2em;
+}
+
+#auto-confirm-block #auto-confirm {
+    display: inline-block;
+    height: 2em;
+    width: 2em;
+}
+
+#auto-confirm-block label {
+    font-size: 1.2em;
+}
+
 #equip-h3 {
     font-size: 3em;
     width: 100%;

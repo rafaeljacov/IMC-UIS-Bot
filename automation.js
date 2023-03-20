@@ -1,5 +1,5 @@
 let statusSelect = document.querySelector('#ResStatus');
-let saveButton = document.querySelector('#btnSaveEdit');
+let confirmButton = document.querySelector('#btnSaveEdit');
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { mode } = message;
@@ -9,14 +9,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     } else if (mode === 'confirm') {
         statusSelect.value = 'Confirmed';
         chrome.runtime.sendMessage({ status: 'save' });
-        saveButton.click();
+        confirmButton.click();
     } else if (mode === 'temporary') {
         statusSelect.value = 'Temporary';
         chrome.runtime.sendMessage({ status: 'save' });
-        saveButton.click();
+        confirmButton.click();
     } else if (mode === 'cancel') {
         statusSelect.value = 'Cancelled';
         chrome.runtime.sendMessage({ status: 'save' });
-        saveButton.click();
+        confirmButton.click();
     }
 });
