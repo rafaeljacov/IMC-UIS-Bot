@@ -26,8 +26,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         loopForEquip(message);
     } else if (status === 'close') {
         async function closeTabs() {
-            let tabs = chrome.tabs.query({
-                url: 'https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}',
+            let tabs = await chrome.tabs.query({
+                url: 'https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=*',
                 currentWindow: true,
             });
             for (let tab of tabs) {
