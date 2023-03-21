@@ -5,7 +5,7 @@ function handleStart() {
 
     if (resId1 > resId2) {
         alert('ID 1 must be smaller than ID 2!');
-    } else if (resId1 && resId2) {
+    } else if (resId1 && resId2 && mode) {
         mode = mode.toLowerCase();
         switch (mode) {
             case 'confirm':
