@@ -42,10 +42,9 @@ confirm.addEventListener('click', (e) => {
             userEquipments.push(id);
         }
     }
-    let autoConfirm = document.querySelector('#auto-confirm');
 
     // Send values as message to the background script
-    sendValues(autoConfirm);
+    sendValues();
 });
 
 // Creating list items with counters for all equipments
@@ -99,7 +98,7 @@ for (let i = 0; i < allEquipments.length; i++) {
     ul.appendChild(li);
 }
 
-async function sendValues(autoConfirm) {
+async function sendValues() {
     if (userEquipments.length === 0) {
         alert('NO EQUIPMENTS ADDED, This window will now close...');
         window.close();
@@ -107,7 +106,6 @@ async function sendValues(autoConfirm) {
         let response = await chrome.runtime.sendMessage({
             status: 'add',
             equipments: userEquipments,
-            autoConfirm,
         });
         if (response === 'done') {
             window.close();

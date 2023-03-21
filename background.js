@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         loopForMode(message);
     } else if (status === 'save') {
         chrome.tabs.create(
-            { url: 'equipments.html' },
+            { url: 'https://uislive.uno-r.edu.ph/IMC/Reservation/' },
             (newTab) => {
                 // Creates new tab to save edited values
                 chrome.scripting.executeScript({
@@ -88,7 +88,6 @@ function automateEquip(id, message) {
                 });
                 let response = await chrome.tabs.sendMessage(tab.id, {
                     equipments: message.equipments,
-                    autoConfirm: message.autoConfirm
                 });
                 resolve(response);
             }
