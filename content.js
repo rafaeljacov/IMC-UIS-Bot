@@ -7,19 +7,11 @@ function handleStart() {
         alert('ID 1 must be smaller than ID 2!');
     } else if (resId1 && resId2 && mode) {
         mode = mode.toLowerCase();
-        switch (mode) {
-            case 'confirm':
-                startAutomate(mode);
-                break;
-            case 'temporary':
-                startAutomate(mode);
-                break;
-            case 'cancel':
-                startAutomate(mode);
-                break;
-            default:
-                alert('Warning: Invalid Mode Entered!');
-                break;
+
+        if (['confirm', 'temporary', 'cancel'].includes(mode)) {
+            startAutomate(mode);
+        } else {
+            alert('Warning: Invalid Mode Entered!');
         }
     } else {
         alert('Invalid Reservation Id Entry!\n\nOperation Aborted!');
