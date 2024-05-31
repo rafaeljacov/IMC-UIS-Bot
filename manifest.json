@@ -1,6 +1,6 @@
 {
     "name": "UNO-R IMC-UIS Automation",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "This extension was purposely made to automate large booking in the UIS website for IMC",
     "manifest_version": 3,
     "author": "Rafael Jacov Medel",
@@ -10,7 +10,7 @@
     "icons": { "16": "logo.png", "48": "logo.png", "128": "logo.png" },
     "content_scripts": [
         {
-            "matches": ["https://uislive.uno-r.edu.ph/IMC/Reservation"],
+            "matches": ["https://salto.uno-r.edu.ph/IMC/Reservation"],
             "css": ["content.css"],
             "js": ["content.js"]
         }
@@ -19,5 +19,5 @@
         "service_worker": "background.js"
     },
     "permissions": ["scripting", "tabs","activeTab"],
-    "host_permissions": ["https://uislive.uno-r.edu.ph/IMC/Reservation*"]
+    "host_permissions": ["https://salto.uno-r.edu.ph/IMC/Reservation*"]
 }

@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         loopForMode(message);
     } else if (status === 'save') {
         chrome.tabs.create(
-            { url: 'https://uislive.uno-r.edu.ph/IMC/Reservation/' },
+            { url: 'https://salto.uno-r.edu.ph/IMC/Reservation/' },
             (newTab) => {
                 // Creates new tab to save edited values
                 chrome.scripting.executeScript({
@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     } else if (status === 'close') {
         async function closeTabs() {
             let tabs = await chrome.tabs.query({
-                url: 'https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=*',
+                url: 'https://salto.uno-r.edu.ph/IMC/Reservation/Edit?ResID=*',
                 currentWindow: true,
             });
             for (let tab of tabs) {
@@ -54,7 +54,7 @@ function automateMode(id, message) {
     return new Promise((resolve) => {
         chrome.tabs.create(
             {
-                url: `https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
+                url: `https://salto.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
             },
             (newTab) => {
                 chrome.scripting.executeScript(
@@ -79,7 +79,7 @@ function automateEquip(id, message) {
     return new Promise((resolve) => {
         chrome.tabs.create(
             {
-                url: `https://uislive.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
+                url: `https://salto.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
             },
             async (tab) => {
                 await chrome.scripting.executeScript({
