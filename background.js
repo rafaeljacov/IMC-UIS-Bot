@@ -8,7 +8,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         loopForMode(message);
     } else if (status === 'save') {
         chrome.tabs.create(
-            { url: 'https://salto.uno-r.edu.ph/IMC/Reservation/' },
+            { 
+                url: 'https://salto.uno-r.edu.ph/IMC/Reservation/',
+                active: false
+            },
             (newTab) => {
                 // Creates new tab to save edited values
                 chrome.scripting.executeScript({
@@ -55,6 +58,7 @@ function automateMode(id, message) {
         chrome.tabs.create(
             {
                 url: `https://salto.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
+                active: false
             },
             (newTab) => {
                 chrome.scripting.executeScript(
@@ -80,6 +84,7 @@ function automateEquip(id, message) {
         chrome.tabs.create(
             {
                 url: `https://salto.uno-r.edu.ph/IMC/Reservation/Edit?ResID=${id}`,
+                active: false
             },
             async (tab) => {
                 await chrome.scripting.executeScript({
